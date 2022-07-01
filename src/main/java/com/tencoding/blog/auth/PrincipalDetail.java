@@ -1,5 +1,6 @@
 package com.tencoding.blog.auth;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -58,8 +59,11 @@ public class PrincipalDetail implements UserDetails{
 	
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		// TODO Auto-generated method stub
-		return null;
+		Collection<GrantedAuthority> collectors = new ArrayList<GrantedAuthority>();
+		collectors.add(() -> {
+			return "ROLE_" + user.getRoleType();
+		});
+		return collectors;
 	}
 
 }

@@ -19,7 +19,7 @@
 	      <input class="form-check-input" type="checkbox"> Remember me
 	    </label>
 	  </div>
-	  <button type="button" class="btn btn-info" id="btn-join">회원가입</button>
+	  <button type="button" class="btn btn-outline-info" id="btn-join">회원가입</button>
 	</form>
 
 <script src="/js/user.js"></script>	

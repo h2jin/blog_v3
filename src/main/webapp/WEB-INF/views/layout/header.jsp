@@ -3,7 +3,9 @@
 <!-- TODO security 설정 -->
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!-- TODO -->
-<sec:authorize access="isAuthenticated()"><sec:authentication property="principal" var="principal"/></sec:authorize>
+<sec:authorize access="isAuthenticated()">
+	<sec:authentication property="principal" var="principal"/>
+</sec:authorize>
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,6 +22,7 @@
 
 <!-- Latest compiled JavaScript -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 </head>
 <body>
 	<nav class="navbar navbar-expand-md bg-dark navbar-dark">
@@ -28,22 +31,22 @@
 	      <a class="nav-link" href="/">블로그</a>
 	    </li>
 	    <c:choose>
-	    	<c:when test=""></c:when>
-	    	<c:otherwise></c:otherwise>
+	    	<c:when test="${empty principal}">
+	    		<li class="nav-item">
+		      <a class="nav-link" href="/auth/login_form">로그인</a>
+		    </li>
+		    <li class="nav-item">
+		      <a class="nav-link" href="/auth/join_form">회원가입</a>
+		    </li>
+	    	</c:when>
+	    	<c:otherwise>
+	    		<li class="nav-item">
+			      <a class="nav-link" href="/board">글쓰기</a>
+			    </li>
+			    <li class="nav-item">
+			      <a class="nav-link" href="#">로그아웃</a>
+			    </li>	
+	    	</c:otherwise>
 	    </c:choose>
-	    <li class="nav-item">
-	      <a class="nav-link" href="/auth/login_form">로그인</a>
-	    </li>
-	    <li class="nav-item">
-	      <a class="nav-link" href="/auth/join_form">회원가입</a>
-	    </li>
-	   <!--  
-	    <li class="nav-item">
-	      <a class="nav-link" href="#">글쓰기</a>
-	    </li>
-	    <li class="nav-item">
-	      <a class="nav-link" href="#">로그아웃</a>
-	    </li>
-	     -->
   </ul>
 	</nav>
