@@ -25,10 +25,10 @@
 	  <c:forEach var="num" items="${pageNumbers}">
 	  	<c:choose>
 	  		<c:when test="${pageable.number + 1 eq num}">
-	  			<li class="page-item active"><a class="page-link" href="/?page=${num -1}">${num}</a></li>
+	  			<li class="page-item active"><a class="page-link" href="/board/search/?q=${searchTitle}&page=${num -1}">${num}</a></li>
 	  		</c:when>
 	  		<c:otherwise>
-	  			<li class="page-item"><a class="page-link" href="/?page=${num -1}">${num}</a></li>	
+	  			<li class="page-item"><a class="page-link" href="/board/search/?q=${searchTitle}&page=${num -1}">${num}</a></li>	
 	  		</c:otherwise>
 	  	</c:choose>
 	  </c:forEach>
@@ -38,5 +38,7 @@
 	 
 	</ul>
 	<hr/>
+	
+<script src="/js/board.js"></script>
 	
 <%@ include file="layout/footer.jsp" %>	

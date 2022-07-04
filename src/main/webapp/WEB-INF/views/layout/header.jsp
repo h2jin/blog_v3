@@ -26,29 +26,42 @@
 </head>
 <body>
 	<nav class="navbar navbar-expand-md bg-dark navbar-dark">
-	  <ul class="navbar-nav">
-	    <li class="nav-item active">
-	      <a class="nav-link" href="/">블로그</a>
-	    </li>
-	    <c:choose>
-	    	<c:when test="${empty principal}">
-	    		<li class="nav-item">
-		      <a class="nav-link" href="/auth/login_form">로그인</a>
-		    </li>
-		    <li class="nav-item">
-		      <a class="nav-link" href="/auth/join_form">회원가입</a>
-		    </li>
-	    	</c:when>
-	    	<c:otherwise>
-	    		<li class="nav-item">
-			      <a class="nav-link" href="/board">글쓰기</a>
-			    </li>
-			    <li class="nav-item">
-			      <a class="nav-link" href="/user/update_form">회원 정보</a>
-			    <li class="nav-item">
-			      <a class="nav-link" href="/logout">로그아웃</a>
-			    </li>	
-	    	</c:otherwise>
-	    </c:choose>
-  </ul>
+	<div class="container-fluid">
+		<a class="navbar-brand" href="/">블로그</a>
+	
+		<div class="collapse navbar-collapse justify-content-between">
+			<ul class="navbar-nav">
+			    <c:choose>
+			    	<c:when test="${empty principal}">
+			    		<li class="nav-item">
+				      <a class="nav-link" href="/auth/login_form">로그인</a>
+				    </li>
+				    <li class="nav-item">
+				      <a class="nav-link" href="/auth/join_form">회원가입</a>
+				    </li>
+			    	</c:when>
+			    	<c:otherwise>
+			    		<li class="nav-item">
+					      <a class="nav-link" href="/board">글쓰기</a>
+					    </li>
+					    <li class="nav-item">
+					      <a class="nav-link" href="/user/update_form">회원 정보</a>
+					    <li class="nav-item">
+					      <a class="nav-link" href="/logout">로그아웃</a>
+					    </li>	
+			    	</c:otherwise>
+			    </c:choose>
+	  		</ul>
+	  		<div class="col-sm-5 "> 
+		  		<form class="form-inline d-flex" action="/board/search">
+				    <input class="form-control mr-sm-2" name="q" value="${searchTitle}" type="text" placeholder="검색어를 입력해주세요">
+				    <button class="btn btn-info" type="submit">Search</button>
+				 </form>
+			</div>
+		  	
+		</div>
+  	</div>
 	</nav>
+	
+
+	

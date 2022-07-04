@@ -1,5 +1,7 @@
 package com.tencoding.blog.api;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -8,12 +10,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tencoding.blog.auth.PrincipalDetail;
 import com.tencoding.blog.dto.ResponseDto;
 import com.tencoding.blog.model.Board;
-import com.tencoding.blog.repository.BoardRepository;
+import com.tencoding.blog.model.Reply;
 import com.tencoding.blog.service.BoardService;
 
 @RestController
@@ -21,6 +24,7 @@ public class BoardApiController {
 	
 	@Autowired
 	private BoardService boardService;
+	
 	
 	// 글 저장
 	@PostMapping("/api/board")
@@ -44,5 +48,14 @@ public class BoardApiController {
 		boardService.deleteBoard(id);
 		return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
 	}
+	
+	// 댓글 쓰기
+	@PostMapping("/board/{boardId}/reply")
+	public ResponseDto<Reply> replyList(@PathVariable int boardId, @RequestBody Reply reply, @AuthenticationPrincipal PrincipalDetail principalDetail ) {
+		// 서비스에 요청
+		Reply replyEntity = boardService.saveReply(principalDetail.getUser(), boardId, reply);
+		return new ResponseDto<Reply>(HttpStatus.OK.value(), replyEntity);
+	}
+	
 
 }

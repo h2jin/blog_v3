@@ -15,10 +15,12 @@ import org.hibernate.annotations.CreationTimestamp;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
 @NoArgsConstructor
+@Data
 @Entity
 public class Reply {
 	
@@ -34,12 +36,12 @@ public class Reply {
 	
 	@ManyToOne
 	@JoinColumn(name = "boardId")
-	@JsonIgnoreProperties({})
+	@JsonIgnoreProperties()
 	private Board boardId;
 	
 	@ManyToOne
 	@JoinColumn(name = "userId")
-	@JsonIgnoreProperties({})
+	@JsonIgnoreProperties()
 	private User userId;
 	
 }

@@ -7,14 +7,19 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.tencoding.blog.model.Board;
+import com.tencoding.blog.model.Reply;
 import com.tencoding.blog.model.User;
 import com.tencoding.blog.repository.BoardRepository;
+import com.tencoding.blog.repository.ReplyRepository;
 
 @Service
 public class BoardService {
 	
 	@Autowired
 	private BoardRepository boardRepository;
+	
+	@Autowired
+	private ReplyRepository replyRepository;
 	
 	// 글 저장
 	@Transactional
@@ -49,8 +54,28 @@ public class BoardService {
 	}
 	
 	// 글 삭제
+	@Transactional
 	public void deleteBoard(int id) {
 		boardRepository.deleteById(id);
 	}
+	
+	@Transactional
+	public Page<Board> searchBoardByTitle(String title, Pageable pageable) {
+		return boardRepository.findByTitleContaining(title, pageable);
+	}
+	
+	// 댓글 저장
+	public Reply saveReply(User user, int boardId, Reply requestReply) {
+		Board board = boardRepository.findById(boardId).orElseThrow(() -> {
+			return new IllegalArgumentException("해당 게시글이 존재하지 않습니다.");
+		});
+		
+		requestReply.setBoardId(board);
+		requestReply.setUserId(user);
+		return replyRepository.save(requestReply);
+	}
+	
+	// 댓글 목록 가져오기
+	
 
 }

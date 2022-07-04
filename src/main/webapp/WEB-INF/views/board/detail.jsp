@@ -32,7 +32,44 @@
 			<hr/>
 			<h5>${board.content}</h5>
 		</div>
+		
+		<br/>
+		<br/>
+		<div class="card">
+			<div>
+				<div class="card-body"><textarea class="form-control" rows="1" id="reply-content"></textarea></div>
+				<div class="card-footer"><button type="button" class="btn btn-outline-info" id="btn-reply-save">등록</button></div>
+			</div>
+		</div>
+		<br/>
+		
+		<div class="card">
+			<div class="card-header"> 댓글</div>
+			<ul class="list-group" id="reply--box">
+			<c:forEach var="reply" items="${board.replys}">
+				
+				<li class="list-group-item" id="reply--${reply.id}">
+				<div>
+					<div>작성자 : ${reply.userId.username}</div>
+					<div class="d-flex justify-content-between">
+						<div>${reply.content}</div>
+						<c:if test="${reply.userId.id eq principal.user.id}">
+							<button class="btn btn-outline-danger btn-sm">삭제</button>
+						</c:if>
+					</div>
+				</div>
+			</c:forEach>
+			
+
+				
+				</li>
+			</ul>
+		</div>
 	</div>
+	<br/>
+	<br/>
+	<br/>
+	
 	
 <script src="/js/board.js"></script>	
 	

@@ -11,6 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.tencoding.blog.model.Board;
 import com.tencoding.blog.service.BoardService;
@@ -22,10 +24,13 @@ public class BoardController {
 	private BoardService boardService;
 
 	// 홈화면
-	@GetMapping({ "", "/" })
-	public String index(@PageableDefault(size = 2, sort = "id", direction = Direction.DESC) Pageable pageable,
+	@GetMapping({ "", "/", "/board/search"})
+	public String index(String q, @PageableDefault(size = 2, sort = "id", direction = Direction.DESC) Pageable pageable,
 			Model model) {
-		Page<Board> boards = boardService.boardList(pageable);
+		System.out.println("index 컨트롤러 들어옴");
+		String searchTitle = q == null ? "" : q;
+		System.out.println("q: " + q);
+		Page<Board> boards = boardService.searchBoardByTitle(searchTitle , pageable);
 		
 		int nowPage = boards.getPageable().getPageNumber() +1;
 		int startPage = Math.max(nowPage - 2, 1);
@@ -39,6 +44,7 @@ public class BoardController {
 		
 		model.addAttribute("pageable", boards);
 		model.addAttribute("pageNumbers", pageNumbers);
+		model.addAttribute("searchTitle", searchTitle);
 		return "index";
 	}
 

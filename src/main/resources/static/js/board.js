@@ -1,5 +1,7 @@
 let index = {
+	
 	init: function() {
+		
 		$("#btn-board-save").bind("click", () => {
 			this.save();
 		});
@@ -11,6 +13,11 @@ let index = {
 		$("#btn-board-delete").bind("click", () => {
 			this.delete();
 		});
+		
+		$("#btn-reply-save").bind("click", () => {
+			this.saveReply();
+		});
+		
 		
 	},
 	
@@ -75,8 +82,40 @@ let index = {
 			console.log(error)
 			alert("삭제 실패");
 		});
+	},
+	
+	saveReply: function() {
+		let data = {
+			boardId:  $("#board-id").text(),
+		 	content: $("#reply-content").val()	
+		}
+		
+		console.log("boardId : " + boardId);
+		console.log("content : " + content);
+		
+		$.ajax({
+			type: "POST",
+			url: `/board/${data.boardId}/reply`,
+			data: JSON.stringify(data),
+			contentType: "application/json; charset=utf-8"
+		}).done(function(response) {
+			if(response.status) {
+				console.log(response.data)
+				addReplyElement(response.data);
+			}
+			alert("댓글 등록 성공")
+		}).fail(function() {
+			alert("등록 실패")
+		});
+		
 	}
+	
+	
+	
 	
 }
 
+
 index.init();
+
+
