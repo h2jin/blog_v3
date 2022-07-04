@@ -44,7 +44,9 @@
 			      <a class="nav-link" href="/board">글쓰기</a>
 			    </li>
 			    <li class="nav-item">
-			      <a class="nav-link" href="#">로그아웃</a>
+			      <a class="nav-link" href="/user/update_form">회원 정보</a>
+			    <li class="nav-item">
+			      <a class="nav-link" href="/logout">로그아웃</a>
 			    </li>	
 	    	</c:otherwise>
 	    </c:choose>

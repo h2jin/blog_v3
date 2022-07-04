@@ -1,5 +1,7 @@
 package com.tencoding.blog.controller;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,10 +23,22 @@ public class BoardController {
 
 	// 홈화면
 	@GetMapping({ "", "/" })
-	public String index(@PageableDefault(size = 3, sort = "id", direction = Direction.DESC) Pageable pageable,
+	public String index(@PageableDefault(size = 2, sort = "id", direction = Direction.DESC) Pageable pageable,
 			Model model) {
 		Page<Board> boards = boardService.boardList(pageable);
+		
+		int nowPage = boards.getPageable().getPageNumber() +1;
+		int startPage = Math.max(nowPage - 2, 1);
+		int endPage = Math.min(nowPage + 2, boards.getTotalPages());
+		
+		ArrayList<Integer> pageNumbers = new ArrayList<>();
+		
+		for(int i = startPage; i <= endPage; i++) {
+			pageNumbers.add(i);
+		}
+		
 		model.addAttribute("pageable", boards);
+		model.addAttribute("pageNumbers", pageNumbers);
 		return "index";
 	}
 

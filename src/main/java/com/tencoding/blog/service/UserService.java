@@ -3,6 +3,7 @@ package com.tencoding.blog.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.tencoding.blog.model.RoleType;
 import com.tencoding.blog.model.User;
@@ -32,9 +33,24 @@ public class UserService {
 		return 1;
 	}
 	
-	// 로그인 서비스
-	public void login(User user) {
+	@Transactional(readOnly = true)
+	public User searchUser(String username) {
+		User userEnctity = userRepository.findByUsername(username).orElseGet(() -> {
+			return new User();
+		});
+		return userEnctity;
+	}
+	
+	@Transactional
+	public void updateUser(User user) {
+		User userEntity = userRepository.findById(user.getId()).orElseThrow(() -> {
+			return new IllegalArgumentException("회원정보가 없습니다.");
+		});
 		
+		String rawPassword = user.getPassword();
+		String hashPassword = encoder.encode(rawPassword);
+		userEntity.setPassword(hashPassword);
+		userEntity.setEmail(user.getEmail());
 	}
 	
 }
