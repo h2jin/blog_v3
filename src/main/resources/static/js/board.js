@@ -87,17 +87,19 @@ let index = {
 	saveReply: function() {
 		let data = {
 			boardId:  $("#board-id").text(),
-		 	content: $("#reply-content").val()	
+		 	content: $("#reply-content").val()
 		}
 		
-		console.log("boardId : " + boardId);
-		console.log("content : " + content);
+		console.log("boardId : " + data.boardId);
+		console.log("content : " + data.content);
+		
 		
 		$.ajax({
 			type: "POST",
 			url: `/board/${data.boardId}/reply`,
 			data: JSON.stringify(data),
-			contentType: "application/json; charset=utf-8"
+			contentType: "application/json; charset=utf-8",
+			dataType: "json"
 		}).done(function(response) {
 			if(response.status) {
 				console.log(response.data)
